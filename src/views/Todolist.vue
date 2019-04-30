@@ -13,13 +13,11 @@
       </todoitem>
 
       <h2>Finished</h2>
-      <ul>
         <doneitem
         :donelist="doneList"
         @changeItem="addTodoList"
         @delete-item="deleteItem"
         ></doneitem>
-      </ul>
     </div>
   </div>
 </template>
@@ -46,51 +44,66 @@ export default {
   },
   methods: {
     addDoneList: function(item) {
-      var r = this.todoList.filter(function(x){
-        if(x.text == item.text && x.id == item.id){
-          return true;
-        }
-      })
-      this.todoList.splice(this.todoList.indexOf(r[0]), 1);
-      this.doneList.unshift(r[0]);
+      this.doneList.unshift(this.todoList[item]);
+      this.todoList.splice(item, 1);
+      this.saveList()
     },
 
     addTodoList: function(item) {
-      var r = this.doneList.filter(function(x){
-        if(x.text == item.text && x.id == item.id){
-          return true;
-        }
-      })
-      this.doneList.splice(this.doneList.indexOf(r[0]), 1);
-      this.todoList.push(r[0]);
+      this.todoList.push(this.doneList[item]);
+      this.doneList.splice(item, 1);
+      this.saveList()
     },
 
     newItem: function(newtext){
       this.todoList.push({ text: newtext, id: ++this.itemCount, edit: false })
       // console.log(this.todoList);
+      this.saveList()
     },
 
     deleteItem: function(item, type) {
       if(type == 'todo') {
-        var r = this.todoList.filter(function(x){
-          if(x.text == item.text && x.id == item.id){
-            return true;
-          }
-        })
-        this.todoList.splice(this.todoList.indexOf(r[0]), 1);
+        this.todoList.splice(item, 1);
       }
       else {
-        var r = this.doneList.filter(function(x){
-          if(x.text == item.text && x.id == item.id){
-            return true;
-          }
-        })
-        this.doneList.splice(this.doneList.indexOf(r[0]), 1);
+        this.doneList.splice(item, 1);
       }
+      this.saveList()
     },
 
     changeText: function(newtext, itemNum){
       this.todoList[itemNum].text = newtext
+      this.saveList()
+    },
+
+    saveList: function() {
+      var storage = window.localStorage
+      storage.setItem('todolist', JSON.stringify(this.todoList))
+      storage.setItem('donelist', JSON.stringify(this.doneList))
+      storage.setItem('itemCount', this.itemCount)
+      console.log('save success')
+    }
+  },
+
+  created() {
+    var storageTodo = window.localStorage.getItem('todolist')
+    if(storageTodo != null) {
+      this.todoList = JSON.parse(storageTodo)
+    } else {
+      this.todoList = []
+    }
+
+    var storageDone = window.localStorage.getItem('donelist')
+    if(storageDone != null) {
+      this.doneList = JSON.parse(storageDone)
+    } else {
+      this.doneList = []
+    }
+    var itemCount = window.localStorage.getItem('itemCount')
+    if(itemCount != null) {
+      this.itemCount = itemCount
+    } else {
+      this.itemCount = 0
     }
   }
 }

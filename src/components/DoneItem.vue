@@ -16,11 +16,11 @@ export default {
 	},
 	methods: {
 		changeitem: function(item) {
-			this.$emit('changeItem', { text: item.text, id: item.id })
+			this.$emit('changeItem', this.donelist.indexOf(item))
 		},
 
 		deleteItem: function(item) {
-			this.$emit('delete-item', { text: item.text, id: item.id }, 'done')
+			this.$emit('delete-item', this.donelist.indexOf(item), 'done')
 		}
 	}
 }
@@ -32,7 +32,7 @@ li{
 	justify-content: space-between;
 	align-items: center;
 	list-style-type: none;
-	/* border: 1px solid black; */
+	border: 1px solid black;
 	margin: 0 0 .5em 0;
 	background-color: rgb(148, 151, 148);
 	height: 3em;

@@ -2,7 +2,7 @@
   <ul>
     <li v-for="item in todolist" :key="item.id">
       <input type="checkbox" @change="changeitem(item)">
-      <form @submit="changeText(item)" v-if="item.edit" class="re-edit" >
+      <form @submit.prevent="changeText(item)" v-if="item.edit" class="re-edit" >
         <input type="text"
         required="required" autofocus  
         v-model="reText">
@@ -28,11 +28,11 @@ export default {
 	},
 	methods: {
 		changeitem: function(item) {
-			this.$emit('change-item', { text: item.text, id: item.id })
+      this.$emit('change-item', this.todolist.indexOf(item))
     },
     
     deleteItem: function(item) {
-      this.$emit('delete-item', { text: item.text, id: item.id }, "todo")
+      this.$emit('delete-item', this.todolist.indexOf(item), "todo")
     },
 
     reEdit: function(item) {
@@ -46,7 +46,7 @@ export default {
     },
 
     changeText: function(item){
-      event.preventDefault()
+      //event.preventDefault()
       item.edit = false
       console.log(this.reText)
       // this.$emit('change-text', this.reText, { text: item.text, id: item.id })
