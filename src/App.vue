@@ -3,7 +3,8 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/todolist">TodoList</router-link> |
-      <router-link to="/article">Article</router-link>
+      <router-link to="/article">Article</router-link> |
+      <router-link to="cardgame">CardGame</router-link>
     </div>
     <router-view/>
   </div>
@@ -29,6 +30,6 @@
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #ffffff;
 }
 </style>
