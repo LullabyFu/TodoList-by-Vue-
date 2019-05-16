@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Article from './views/Article.vue'
-import CardGame from './views/CardGame.vue'
+import TodaySZ from './views/TodaySZ.vue'
 
 Vue.use(Router)
 
@@ -29,9 +29,9 @@ export default new Router({
       component: Article
     },
     {
-      path:'/cardgame',
-      name: 'game',
-      component: CardGame
+      path:'/TodaySZ',
+      name: 'todaysz',
+      component: TodaySZ
     }
   ]
 })

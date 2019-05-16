@@ -1,17 +1,16 @@
 <template>
   <div class="game">
-		<cardlist></cardlist>
+		<weather></weather>
   </div>
 </template>
 
 <script>
-import cardlist from '@/components/CardList.vue'
-import { setTimeout } from 'timers';
+import weather from '@/components/Weather.vue'
 
 export default {
 	name: 'game',
   components: {
-		cardlist
+		weather
 	}
 }
 </script>
